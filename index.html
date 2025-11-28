@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vortex - The Intelligent Content Engine</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#A78BFA', /* Vortex Light Purple */
+                            DEFAULT: '#7C3AED', /* Vortex Purple */
+                            dark: '#5B21B6', /* Vortex Dark Purple */
+                            accent: '#3B82F6' /* Blue Accent */
+                        },
+                        darkbg: {
+                            DEFAULT: '#0B1121',
+                            card: '#161F32'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth Mode Transition */
+        body, .bg-darkbg-card, .text-gray-900, .text-white, nav {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1121;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7C3AED;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(to right, theme('colors.brand.light'), theme('colors.brand.accent'));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Hero Background Glow */
+        .hero-glow-container {
+            position: absolute;
+            top: -30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .hero-glow {
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            left: 50%;
+            top: 0;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(to bottom right, theme('colors.brand.DEFAULT'), theme('colors.brand.accent'));
+            animation: pulse-slow 8s infinite alternate;
+        }
+
+        /* Glass Cards */
+        .feature-card {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        html:not(.dark) .feature-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+    
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+</head>
+
+<body class="font-sans antialiased bg-gray-50 dark:bg-darkbg text-gray-900 dark:text-white overflow-x-hidden">
+
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-darkbg/90 backdrop-blur-md">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 bg-gradient-to-br from-brand to-brand-accent rounded-xl flex items-center justify-center text-white font-heading font-bold text-xl shadow-lg shadow-brand/20 transition-transform group-hover:scale-110 group-hover:rotate-6">
+                    V
+                </div>
+                <span class="self-center text-2xl font-heading font-black tracking-tight whitespace-nowrap dark:text-white text-gray-900 pl-1">Vortex</span>
+            </a>
+
+            <div class="flex items-center md:order-2 gap-4">
+                <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-all">
+                    <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon text-lg"></i>
+                    <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun text-lg text-yellow-500"></i>
+                </button>
+
+                <a href="https://www.mediafire.com/file/6i2190kot4djirz/YTLodaer.zip/file" target="_blank" class="hidden md:inline-flex text-white bg-brand hover:bg-brand-dark focus:ring-4 focus:outline-none focus:ring-brand/50 font-medium rounded-full text-sm px-6 py-2.5 text-center transition-all shadow-lg shadow-brand/30 hover:-translate-y-0.5">
+                    <i class="fa-solid fa-download mr-2"></i> Download
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative pt-48 pb-36 px-4 overflow-hidden">
+        <div class="hero-glow-container"><div class="hero-glow"></div></div>
+
+        <div class="max-w-screen-xl mx-auto text-center relative z-10">
+            <div data-aos="fade-down" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand/10 border border-brand/20 text-brand text-sm font-semibold mb-8">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
+                </span>
+                v5.0 Update Released
+            </div>
+
+            <h1 data-aos="fade-up" data-aos-duration="800" class="mb-6 text-5xl font-heading font-black tracking-tight leading-none dark:text-white text-gray-900 md:text-7xl lg:text-8xl">
+                The Intelligent <br>
+                <span class="gradient-text">Content Engine.</span>
+            </h1>
+            
+            <p data-aos="fade-up" data-aos-delay="200" data-aos-duration="800" class="mb-10 text-xl font-normal text-gray-600 dark:text-gray-300 lg:text-2xl sm:px-16 lg:px-56 max-w-4xl mx-auto leading-relaxed">
+                Take full control of your media library with Vortex. AI-powered ad skipping, smart organization, and lightning-fast speeds in one sleek interface.
+            </p>
+            
+            <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="800" class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-6">
+                <a href="https://www.mediafire.com/file/6i2190kot4djirz/YTLodaer.zip/file" target="_blank" class="group inline-flex justify-center items-center py-4 px-10 text-lg font-bold text-center text-white rounded-full bg-gradient-to-r from-brand to-brand-accent hover:from-brand-dark hover:to-brand focus:ring-4 focus:ring-brand/40 shadow-2xl shadow-brand/40 transition-all hover:scale-105 relative overflow-hidden">
+                    <span class="relative z-10 flex items-center">
+                        Get Vortex
+                        <i class="fa-brands fa-windows ml-3 text-2xl animate-bounce group-hover:animate-none"></i>
+                    </span>
+                </a>
+                
+                <a href="#features" class="inline-flex justify-center items-center py-4 px-10 text-lg font-medium text-center dark:text-white text-gray-800 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-all hover:border-brand/50">
+                    See Features
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-24 relative z-10">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-heading font-bold dark:text-white text-gray-900 mb-6">Engineered for Power.</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Vortex combines raw power with smart automation.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div data-aos="fade-up" data-aos-delay="100" class="feature-card p-8 bg-white dark:bg-darkbg-card rounded-3xl hover:border-brand/50 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6 text-brand-accent text-3xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-folder-tree"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold dark:text-white text-gray-900 mb-3">Smart Folders</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Automatically sorts downloads into folders by Channel Name or Playlist Title. Zero clutter.</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="200" class="feature-card p-8 bg-white dark:bg-darkbg-card rounded-3xl hover:border-red-500/50 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mb-6 text-red-500 text-3xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold dark:text-white text-gray-900 mb-3">AI SponsorBlock</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Intelligent detection skips in-video sponsors, intros, and reminders. Watch pure content.</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="300" class="feature-card p-8 bg-white dark:bg-darkbg-card rounded-3xl hover:border-green-500/50 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6 text-green-500 text-3xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold dark:text-white text-gray-900 mb-3">Instant Preview</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Paste a link and instantly see the thumbnail and duration before you even click download.</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="400" class="feature-card p-8 bg-white dark:bg-darkbg-card rounded-3xl hover:border-purple-500/50 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-6 text-purple-500 text-3xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold dark:text-white text-gray-900 mb-3">Precision Cutter</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Need just a clip? Set Start and End times to download exactly what you want.</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="500" class="feature-card p-8 bg-white dark:bg-darkbg-card rounded-3xl hover:border-yellow-500/50 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl flex items-center justify-center mb-6 text-yellow-500 text-3xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-closed-captioning"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold dark:text-white text-gray-900 mb-3">Burn Subtitles</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Permanently fuse subtitles into the video file for compatibility with TV & old devices.</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="600" class="feature-card p-8 bg-white dark:bg-darkbg-card rounded-3xl hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-cyan-100 dark:bg-cyan-900/30 rounded-2xl flex items-center justify-center mb-6 text-cyan-500 text-3xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold dark:text-white text-gray-900 mb-3">Bulk Power</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Handle massive playlists or import hundreds of links via text file. Vortex doesn't sweat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gray-100 dark:bg-darkbg-card transition-colors duration-300"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand/10 to-transparent dark:from-brand/20 opacity-50"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 relative z-10 text-center" data-aos="zoom-in">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand/10 text-brand dark:text-brand-light text-sm font-bold mb-6 border border-brand/20">Free & Open Source</span>
+            <h2 class="text-4xl md:text-6xl font-heading font-black dark:text-white text-gray-900 mb-8 leading-tight">Your Media. Your Rules.</h2>
+            <p class="text-2xl text-gray-600 dark:text-gray-300 mb-12 font-light">Download Vortex v5.0 and experience the difference.</p>
+            
+            <a href="https://www.mediafire.com/file/6i2190kot4djirz/YTLodaer.zip/file" target="_blank" class="group inline-flex justify-center items-center py-6 px-12 text-xl font-bold text-center text-white rounded-full bg-brand hover:bg-brand-dark shadow-2xl shadow-brand/40 transition-all hover:scale-105 hover:shadow-brand/60 animate-float">
+                <i class="fa-solid fa-cloud-arrow-down mr-4 text-3xl group-hover:animate-bounce"></i>
+                Download Now
+            </a>
+            <div class="mt-8 flex justify-center items-center gap-6 text-gray-500 dark:text-gray-400 text-sm">
+                <span class="flex items-center"><i class="fa-brands fa-windows mr-2"></i> Windows 10/11</span>
+                <span class="flex items-center"><i class="fa-solid fa-shield-halved mr-2"></i> Virus Free</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white dark:bg-darkbg border-t border-gray-200 dark:border-gray-800 py-12 transition-colors duration-300">
+        <div class="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <a href="#" class="inline-flex items-center space-x-2 mb-4 md:mb-0 opacity-80 hover:opacity-100 transition-opacity">
+                 <div class="w-8 h-8 bg-gradient-to-br from-brand to-brand-accent rounded-lg flex items-center justify-center text-white font-heading font-bold">V</div>
+                 <span class="text-xl font-heading font-bold dark:text-white text-gray-900">Vortex</span>
+            </a>
+            
+            <div class="text-center md:text-right">
+                <p class="text-gray-500 dark:text-gray-400 mb-1">Developed by <span class="text-brand dark:text-brand-light font-bold">Ibrahim Khaled</span></p>
+                <p class="text-gray-400 dark:text-gray-600 text-sm">© 2025 Vortex Downloader. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50, duration: 800, easing: 'ease-out-cubic' });
+
+        // Theme Toggle Logic
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (localStorage.getItem('theme')) {
+                if (localStorage.getItem('theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
