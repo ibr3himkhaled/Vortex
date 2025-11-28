@@ -25,16 +25,6 @@
 | 📋 **Smart Clipboard** | Auto-detects YouTube links from your clipboard instantly. Just copy, and Vortex is ready. |
 | 📦 **Bulk Power** | Supports massive **Playlist** downloads and batch processing from text files. |
 
----
-
-## 📸 Screenshots
-
-<div align="center">
-  <img src="https://via.placeholder.com/800x500.png?text=Vortex+Interface+Screenshot" alt="Vortex UI" width="800">
-</div>
-
----
-
 ## 🛠️ Built With
 
 * **Language:** Python 3.14
@@ -49,13 +39,13 @@
 
 Ready to try it? Download the latest standalone executable for Windows (No Python required).
 
-[**⬇️ Download Vortex v5.6 (Windows)**](https://www.mediafire.com/file/6i2190kot4djirz/YTLodaer.zip/file)
+[**⬇️ Download Vortex v5.6 (Windows)**](https://youtubevideodownlaoder.netlify.app/)
 
 ---
 
 ## 👨‍💻 Developer
 
-Developed with ❤️ and pixel-perfect precision by **[Ibrahim]**.
+Developed with ❤️ by **[Ibrahim]**.
 
 ---
 *Disclaimer: This tool is intended for personal archiving and educational purposes only.*
