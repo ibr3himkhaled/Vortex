@@ -39,13 +39,13 @@
 
 Ready to try it? Download the latest standalone executable for Windows (No Python required).
 
-[**⬇️ Download Vortex v5.6 (Windows)**](https://youtubevideodownlaoder.netlify.app/)
+[**⬇️ Download Vortex v5.0 (Windows)**](https://youtubevideodownlaoder.netlify.app/)
 
 ---
 
 ## 👨‍💻 Developer
 
-Developed with ❤️ by **[Ibrahim]**.
+Developed with ❤️ by **[Ibrahim Khaled]**.
 
 ---
 *Disclaimer: This tool is intended for personal archiving and educational purposes only.*
