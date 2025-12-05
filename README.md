@@ -49,14 +49,14 @@ Powered by **yt-dlp** and wrapped in a modern, high-performance UI using **Flet*
 ### 🪟 Windows
 Standalone EXE (No Python required):
 
-➡️ **[Download Vortex for Windows](https://vortexdownlaode.netlify.app/)**
+➡️ **[Download Vortex for Windows](https://vortexdownlaoder.netlify.app/)**
 
 ---
 
 ### 📱 Android (7 → 16)
 
 APK download:
-> *(Link will be published soon)*
+> *([Link will be published soon](https://vortexdownlaoder.netlify.app/))*
 
 📁 Files are saved to:
 
