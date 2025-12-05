@@ -1,4 +1,6 @@
-# 🌀 Vortex Downloader
+<p align="center">
+  <img src="vortex-logo.svg" width="90">
+</p>
 
 > **The Intelligent Cross-Platform Content Engine for Power Users.**  
 > *Download, Organize, and Manage media like never before — on Windows & Android.*
