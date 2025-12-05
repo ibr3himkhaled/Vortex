@@ -56,7 +56,7 @@ Standalone EXE (No Python required):
 ### 📱 Android (7 → 16)
 
 APK download:
-> *([Link will be published soon](https://vortexdownlaoder.netlify.app/))*
+➡️ **[Download Vortex for Android](https://vortexdownlaoder.netlify.app/)**
 
 📁 Files are saved to:
 
