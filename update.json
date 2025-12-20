@@ -1,5 +1,5 @@
 {
-  "latest_version": "1.1.0",
+  "latest_version": "1.2.0",
   "windows_url": "https://vortexdownloader.netlify.app/",
   "android_url": "https://vortexdownloader.netlify.app/",
   "changelog": "- Initial public release of Vortex for Windows and Android\n- Android 7–16 support with proper storage handling\n- New minimal logo and updated UI"
