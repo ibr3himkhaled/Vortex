@@ -51,7 +51,7 @@ Powered by **yt-dlp** and wrapped in a modern, high-performance UI using **Flet*
 ### 🪟 Windows
 Standalone EXE (No Python required):
 
-➡️ **[Download Vortex for Windows](https://vortexdownloader.netlify.app/)**
+➡️ **[Download Vortex for Windows](https://ibr3himkhaled.github.io/Vortex/)**
 
 ---
 
@@ -59,7 +59,7 @@ Standalone EXE (No Python required):
 
 APK download:
 
-➡️ **[Download Vortex for Android](https://vortexdownloader.netlify.app/)**
+➡️ **[Download Vortex for Android](https://ibr3himkhaled.github.io/Vortex/)**
 
 📁 Files are saved to:
 
