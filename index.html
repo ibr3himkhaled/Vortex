@@ -7,7 +7,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Outfit:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -24,29 +24,27 @@
                     },
                     colors: {
                         vortex: {
-                            primary: '#3700b3', // Deep Blue/Purple form Python App
-                            accent: '#03dac6',  // Cyan/Teal from Python App
-                            dark: '#0f0f0f',    // Background from Python App
-                            surface: '#1e1e1e'
+                            primary: '#7c3aed',
+                            accent: '#22d3ee',
+                            dark: '#09090b',
+                            surface: '#18181b',
+                            glow: '#a855f7'
                         }
-                    },
-                    backgroundImage: {
-                        'vortex-gradient': 'conic-gradient(at center top, rgb(55, 0, 179), rgb(15, 15, 15), rgb(15, 15, 15))',
-                        'glass': 'linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)'
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 3s ease-in-out infinite alternate',
-                        'spin-slow': 'spin 12s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'gradient': 'gradient 8s ease infinite',
                     },
                     keyframes: {
                         float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
+                            '0%, 100%': { transform: 'translateY(0px)' },
                             '50%': { transform: 'translateY(-20px)' },
                         },
-                        glow: {
-                            '0%': { boxShadow: '0 0 20px -5px #3700b3' },
-                            '100%': { boxShadow: '0 0 50px 10px #03dac6' }
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
                         }
                     }
                 }
@@ -55,178 +53,365 @@
     </script>
 
     <style>
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #333 #09090b;
+        }
+        
         body {
-            background-color: #000;
+            background-color: #09090b;
             overflow-x: hidden;
         }
 
-        /* The Moving Background (The Vortex) */
-        .ambient-light {
+        .mesh-gradient {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
             width: 100vw;
             height: 100vh;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(55, 0, 179, 0.15), transparent 25%), 
-                radial-gradient(circle at 85% 30%, rgba(3, 218, 198, 0.1), transparent 25%);
             z-index: -1;
-            filter: blur(60px);
-            animation: pulse-bg 10s infinite alternate;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 60%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+                radial-gradient(ellipse at 60% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+            animation: mesh-move 20s ease-in-out infinite;
         }
 
-        /* Glassmorphism Classes */
-        .glass-panel {
-            background: rgba(30, 30, 30, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        @keyframes mesh-move {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            25% { transform: scale(1.05) translate(-2%, 2%); }
+            50% { transform: scale(1) translate(2%, -2%); }
+            75% { transform: scale(1.05) translate(-1%, -1%); }
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: orb-float 10s ease-in-out infinite;
+        }
+
+        @keyframes orb-float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
         }
 
         .glass-nav {
-            background: rgba(15, 15, 15, 0.6);
+            background: rgba(9, 9, 11, 0.7);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* Text Gradients */
-        .text-gradient {
-            background: linear-gradient(135deg, #fff 0%, #03dac6 100%);
+        .text-gradient-main {
+            background: linear-gradient(135deg, #fff 0%, #22d3ee 50%, #a855f7 100%);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradient 4s ease infinite;
         }
 
-        .text-gradient-purple {
-            background: linear-gradient(135deg, #a855f7 0%, #3700b3 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f0f0f; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #03dac6; }
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
 
-        @keyframes pulse-bg {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            100% { transform: translate(-50%, -50%) scale(1.1); }
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(34, 211, 238, 0.3);
+            box-shadow: 0 20px 40px -20px rgba(124, 58, 237, 0.4);
+        }
+
+        .app-mockup {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .app-mockup::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #7c3aed, #22d3ee, #a855f7);
+            border-radius: 24px;
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(20px);
+            animation: border-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes border-glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: shape-float 15s infinite;
+        }
+
+        @keyframes shape-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
         }
     </style>
 </head>
 <body class="text-white selection:bg-vortex-accent selection:text-black">
 
-    <div class="ambient-light"></div>
+    <div class="mesh-gradient"></div>
+    <div class="noise-overlay"></div>
 
-    <nav class="fixed w-full z-50 top-0 start-0 glass-nav transition-all duration-300">
+    <!-- Floating Shapes Background -->
+    <div class="floating-shapes">
+        <div class="shape w-32 h-32 top-20 left-10" style="animation-delay: 0s;"></div>
+        <div class="shape w-20 h-20 top-40 right-20" style="animation-delay: 2s;"></div>
+        <div class="shape w-40 h-40 bottom-40 left-1/4" style="animation-delay: 4s;"></div>
+        <div class="shape w-16 h-16 bottom-20 right-1/3" style="animation-delay: 6s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 glass-nav transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between">
             
             <a href="#" class="flex items-center gap-3 group">
                 <div class="relative w-10 h-10 flex items-center justify-center">
-                    <div class="absolute inset-0 bg-vortex-primary/50 blur-lg rounded-full group-hover:bg-vortex-accent/50 transition-all"></div>
-                    <svg class="w-8 h-8 text-vortex-accent relative z-10 drop-shadow-[0_0_10px_rgba(3,218,198,0.8)] transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/>
-                    </svg>
+                    <div class="absolute inset-0 bg-vortex-primary/30 blur-xl rounded-full group-hover:bg-vortex-accent/40 transition-all duration-500"></div>
+                    <div class="relative z-10 w-10 h-10 bg-gradient-to-br from-vortex-primary to-vortex-accent rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                        <i class="fa-solid fa-bolt text-white text-lg"></i>
+                    </div>
                 </div>
-                <span class="text-2xl font-bold tracking-tight font-mono">Vortex</span>
+                <span class="text-2xl font-bold tracking-tight">Vortex</span>
             </a>
 
-            <div class="flex items-center gap-4">
-                <a href="#features" class="hidden md:block text-sm text-gray-300 hover:text-white transition-colors">Features</a>
-                <a href="#download" class="group relative px-6 py-2.5 bg-white text-black font-bold rounded-full overflow-hidden transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]">
-                    <span class="relative z-10 flex items-center gap-2">
-                        Download v1.5 <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition-transform"></i>
-                    </span>
+            <div class="flex items-center gap-6">
+                <a href="#features" class="hidden md:flex text-sm text-gray-400 hover:text-white transition-colors relative group">
+                    Features
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-vortex-accent transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#download" class="btn-glow px-6 py-2.5 bg-gradient-to-r from-vortex-primary to-purple-600 text-white font-bold rounded-full hover:shadow-lg hover:shadow-vortex-primary/40 transition-all flex items-center gap-2">
+                    <span>Download</span>
+                    <i class="fa-solid fa-arrow-down text-sm"></i>
                 </a>
             </div>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden">
         
-        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
-        
-        <div class="container mx-auto px-6 relative z-10 text-center">
+        <div class="container mx-auto px-6 relative z-10">
             
-            <div data-aos="fade-down" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border-vortex-accent/30 text-vortex-accent text-xs font-mono mb-8 hover:bg-vortex-accent/10 cursor-default transition-colors">
-                <span class="w-2 h-2 rounded-full bg-vortex-accent animate-pulse"></span>
-                STABLE RELEASE v1.5
+            <!-- Badge -->
+            <div data-aos="fade-down" class="flex justify-center mb-10">
+                <div class="inline-flex items-center gap-3 px-5 py-2.5 glass-card rounded-full text-sm font-medium">
+                    <span class="w-2 h-2 rounded-full bg-vortex-accent animate-pulse"></span>
+                    <span class="text-gray-300">Version 1.0 Released</span>
+                    <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                    <span class="text-vortex-accent">Stable</span>
+                </div>
             </div>
 
-            <h1 data-aos="fade-up" data-aos-duration="1000" class="text-6xl md:text-8xl font-bold tracking-tighter mb-6 leading-tight">
-                Media Control.<br>
-                <span class="text-gradient">Redefined.</span>
-            </h1>
+            <!-- Main Heading -->
+            <div class="text-center mb-16">
+                <h1 data-aos="fade-up" data-aos-duration="1000" class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight">
+                    Media Control<br>
+                    <span class="text-gradient-main">Reimagined</span>
+                </h1>
 
-            <p data-aos="fade-up" data-aos-delay="200" class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 font-light">
-                The most advanced open-source downloader powered by <span class="text-white font-medium">yt-dlp</span> & <span class="text-white font-medium">FFmpeg</span>. 
-                Experience <span class="text-vortex-accent">8K downloads</span>, smart organization, and blazing speed.
-            </p>
+                <p data-aos="fade-up" data-aos-delay="150" class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                    The most powerful open-source downloader built with 
+                    <span class="text-white font-medium">yt-dlp</span> & <span class="text-white font-medium">FFmpeg</span>. 
+                    Experience blazing-fast <span class="text-vortex-accent">8K downloads</span>, smart organization, and next-level performance.
+                </p>
 
-            <div data-aos="zoom-in" data-aos-delay="400" data-aos-duration="1000" class="relative max-w-4xl mx-auto">
-                <div class="absolute -inset-1 bg-gradient-to-r from-vortex-primary to-vortex-accent rounded-2xl blur-xl opacity-40 animate-pulse"></div>
-                
-                <div class="relative glass-panel rounded-xl overflow-hidden shadow-2xl border border-gray-700/50 bg-[#0f0f0f]">
-                    <div class="h-10 bg-[#1e1e1e] border-b border-[#2d2d2d] flex items-center px-4 justify-between">
+                <div data-aos="zoom-in" data-aos-delay="300" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#download" class="btn-glow px-8 py-4 bg-gradient-to-r from-vortex-primary to-purple-600 text-white font-bold rounded-xl hover:shadow-2xl hover:shadow-vortex-primary/50 transition-all flex items-center gap-3 text-lg">
+                        <i class="fa-brands fa-windows"></i>
+                        Get Started Free
+                    </a>
+                    <a href="#features" class="px-8 py-4 glass-card rounded-xl font-medium hover:bg-white/10 transition-all flex items-center gap-3 text-lg">
+                        <i class="fa-solid fa-play text-vortex-accent"></i>
+                        See Features
+                    </a>
+                </div>
+            </div>
+
+            <!-- App Mockup -->
+            <div data-aos="fade-up" data-aos-delay="400" class="app-mockup max-w-5xl mx-auto">
+                <div class="glass-card rounded-2xl overflow-hidden shadow-2xl bg-vortex-surface">
+                    <!-- Window Header -->
+                    <div class="h-12 bg-[#18181b] border-b border-white/5 flex items-center px-4 justify-between">
                         <div class="flex gap-2">
                             <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
                             <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                             <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
                         </div>
-                        <div class="text-xs text-gray-500 font-mono">Vortex v1.5</div>
-                        <div class="w-10"></div>
+                        <div class="text-xs text-gray-500 font-mono">Vortex v1.0</div>
+                        <div class="w-14"></div>
                     </div>
                     
-                    <div class="flex h-[450px] md:h-[500px]">
-                        <div class="w-20 md:w-64 bg-[#1e1e1e] border-r border-[#2d2d2d] p-4 flex flex-col items-center md:items-start">
+                    <!-- App Content -->
+                    <div class="flex min-h-[400px] md:min-h-[500px]">
+                        <!-- Sidebar -->
+                        <div class="w-20 md:w-64 bg-[#121212] border-r border-white/5 p-4 flex flex-col">
                             <div class="flex items-center gap-3 mb-10 px-2">
-                                <i class="fa-solid fa-bolt text-vortex-accent text-2xl"></i>
+                                <div class="w-8 h-8 bg-gradient-to-br from-vortex-primary to-vortex-accent rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-bolt text-white text-sm"></i>
+                                </div>
                                 <span class="hidden md:block font-bold text-xl">Vortex</span>
                             </div>
                             <div class="space-y-2 w-full">
-                                <div class="p-3 bg-[#3700b3]/20 text-vortex-accent rounded-lg flex items-center gap-4 border-l-2 border-vortex-accent">
+                                <div class="p-3 bg-gradient-to-r from-vortex-primary/20 to-transparent text-vortex-accent rounded-xl flex items-center gap-4 border-l-2 border-vortex-accent">
                                     <i class="fa-solid fa-home"></i> <span class="hidden md:block">Home</span>
                                 </div>
-                                <div class="p-3 text-gray-400 hover:text-white rounded-lg flex items-center gap-4">
-                                    <i class="fa-solid fa-sliders"></i> <span class="hidden md:block">Settings</span>
+                                <div class="p-3 text-gray-500 hover:text-white hover:bg-white/5 rounded-xl flex items-center gap-4 transition-all">
+                                    <i class="fa-solid fa-download"></i> <span class="hidden md:block">Downloads</span>
                                 </div>
-                                <div class="p-3 text-gray-400 hover:text-white rounded-lg flex items-center gap-4">
+                                <div class="p-3 text-gray-500 hover:text-white hover:bg-white/5 rounded-xl flex items-center gap-4 transition-all">
+                                    <i class="fa-solid fa-gear"></i> <span class="hidden md:block">Settings</span>
+                                </div>
+                                <div class="p-3 text-gray-500 hover:text-white hover:bg-white/5 rounded-xl flex items-center gap-4 transition-all">
                                     <i class="fa-solid fa-clock-rotate-left"></i> <span class="hidden md:block">History</span>
                                 </div>
                             </div>
-                            <div class="mt-auto pt-4 border-t border-[#2d2d2d] w-full text-center md:text-left">
-                                <p class="text-[10px] text-gray-500 hidden md:block">Developed by</p>
-                                <p class="text-xs font-bold text-gray-400 hidden md:block">Ibrahim Khaled</p>
+                            <div class="mt-auto pt-4 border-t border-white/5">
+                                <p class="text-[10px] text-gray-600 hidden md:block">Developed by</p>
+                                <p class="text-xs font-medium text-gray-500 hidden md:block">Ibrahim Khaled</p>
                             </div>
                         </div>
                         
-                        <div class="flex-1 p-8 flex flex-col justify-center items-center bg-[#0f0f0f] relative overflow-hidden">
-                            <div class="w-full max-w-lg mb-8">
-                                <div class="h-12 bg-[#2d2d2d] rounded-lg flex items-center px-4 text-gray-400 border border-[#404040]">
-                                    <i class="fa-solid fa-link mr-3"></i> https://youtube.com/watch?v=...
+                        <!-- Main Content -->
+                        <div class="flex-1 p-8 bg-vortex-dark relative overflow-hidden">
+                            <!-- Decorative elements -->
+                            <div class="glow-orb w-64 h-64 bg-vortex-primary/20 -top-20 -right-20"></div>
+                            <div class="glow-orb w-48 h-48 bg-vortex-accent/10 bottom-0 left-0" style="animation-delay: 5s;"></div>
+                            
+                            <div class="relative z-10">
+                                <!-- URL Input -->
+                                <div class="w-full mb-8">
+                                    <div class="h-14 bg-[#18181b] rounded-xl flex items-center px-5 text-gray-400 border border-white/5 focus-within:border-vortex-primary/50 focus-within:shadow-lg focus-within:shadow-vortex-primary/10 transition-all">
+                                        <i class="fa-solid fa-link mr-4 text-vortex-accent"></i>
+                                        <input type="text" placeholder="Paste your video URL here..." class="bg-transparent w-full outline-none text-white placeholder-gray-600">
+                                        <button class="px-4 py-2 bg-vortex-primary rounded-lg text-white font-medium text-sm hover:bg-purple-600 transition-colors">
+                                            Analyze
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex gap-6 w-full max-w-2xl">
-                                <div class="w-1/3 aspect-video bg-[#1e1e1e] rounded-lg border border-[#2d2d2d] flex flex-col items-center justify-center text-gray-600">
-                                    <i class="fa-solid fa-image text-3xl mb-2"></i>
-                                    <span class="text-xs">Preview</span>
+
+                                <!-- Preview & Controls -->
+                                <div class="flex gap-6 w-full">
+                                    <div class="w-1/3 aspect-video bg-[#18181b] rounded-xl border border-white/5 flex flex-col items-center justify-center relative overflow-hidden group">
+                                        <div class="absolute inset-0 bg-gradient-to-br from-vortex-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                        <i class="fa-solid fa-play-circle text-5xl text-gray-600 group-hover:text-vortex-accent transition-colors mb-2"></i>
+                                        <span class="text-xs text-gray-600">Preview</span>
+                                    </div>
+                                    <div class="w-2/3 space-y-4">
+                                        <div class="flex gap-3">
+                                            <button class="flex-1 h-12 bg-[#18181b] rounded-xl text-sm font-medium text-gray-300 border border-white/5 hover:border-vortex-primary/50 hover:text-white transition-all flex items-center justify-center gap-2">
+                                                <i class="fa-solid fa-video text-vortex-accent"></i> Video
+                                            </button>
+                                            <button class="flex-1 h-12 bg-[#18181b] rounded-xl text-sm font-medium text-gray-500 border border-white/5 hover:border-vortex-primary/50 hover:text-white transition-all flex items-center justify-center gap-2">
+                                                <i class="fa-solid fa-music text-purple-400"></i> Audio
+                                            </button>
+                                        </div>
+                                        <button class="w-full h-14 bg-gradient-to-r from-vortex-primary to-purple-600 rounded-xl font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-vortex-primary/50 transition-all">
+                                            <i class="fa-solid fa-download"></i> Start Download
+                                        </button>
+                                        <!-- Progress Bar -->
+                                        <div class="space-y-2">
+                                            <div class="h-2 bg-[#18181b] rounded-full overflow-hidden">
+                                                <div class="h-full bg-gradient-to-r from-vortex-primary to-vortex-accent w-2/3 rounded-full relative">
+                                                    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-between text-xs">
+                                                <span class="text-gray-500">Downloading: video.mp4</span>
+                                                <span class="text-vortex-accent font-mono">64%</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="w-2/3 space-y-4">
-                                    <div class="flex gap-2">
-                                        <div class="h-10 bg-[#1e1e1e] rounded w-1/2"></div>
-                                        <div class="h-10 bg-[#1e1e1e] rounded w-1/2"></div>
+
+                                <!-- Quick Actions -->
+                                <div class="grid grid-cols-3 gap-4 mt-8">
+                                    <div class="p-4 bg-[#18181b]/50 rounded-xl border border-white/5 text-center">
+                                        <i class="fa-solid fa-high-resolution text-vortex-accent text-xl mb-2"></i>
+                                        <p class="text-xs text-gray-500">8K Quality</p>
                                     </div>
-                                    <div class="h-12 bg-vortex-primary rounded-lg flex items-center justify-center text-white font-bold shadow-[0_0_15px_rgba(55,0,179,0.5)]">
-                                        <i class="fa-solid fa-download mr-2"></i> Start Download
+                                    <div class="p-4 bg-[#18181b]/50 rounded-xl border border-white/5 text-center">
+                                        <i class="fa-solid fa-bolt text-yellow-400 text-xl mb-2"></i>
+                                        <p class="text-xs text-gray-500">Fast Speed</p>
                                     </div>
-                                    <div class="h-2 bg-[#2d2d2d] rounded-full overflow-hidden">
-                                        <div class="h-full bg-vortex-accent w-2/3"></div>
-                                    </div>
-                                    <div class="flex justify-between text-xs text-gray-500">
-                                        <span>Downloading...</span>
-                                        <span>64%</span>
+                                    <div class="p-4 bg-[#18181b]/50 rounded-xl border border-white/5 text-center">
+                                        <i class="fa-solid fa-shield-halved text-green-400 text-xl mb-2"></i>
+                                        <p class="text-xs text-gray-500">Safe & Secure</p>
                                     </div>
                                 </div>
                             </div>
@@ -238,53 +423,60 @@
         </div>
     </section>
 
-    <section id="features" class="py-24 relative">
+    <!-- Features Section -->
+    <section id="features" class="py-28 relative">
         <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block px-4 py-1.5 glass-card rounded-full text-vortex-accent text-sm font-medium mb-6">Features</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl md:text-5xl font-bold mb-6">Everything you need</h2>
+                <p data-aos="fade-up" data-aos-delay="200" class="text-gray-400 max-w-xl mx-auto">Powerful features that make downloading media effortless and enjoyable.</p>
+            </div>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <div data-aos="fade-up" class="glass-panel p-8 rounded-2xl hover:border-vortex-accent/30 transition-all group">
-                    <div class="w-12 h-12 rounded-lg bg-vortex-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-wand-magic-sparkles text-vortex-accent text-xl"></i>
+                <div data-aos="fade-up" data-aos-delay="100" class="feature-card glass-card p-8 rounded-2xl">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-vortex-primary to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-vortex-primary/30">
+                        <i class="fa-solid fa-wand-magic-sparkles text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Smart Organize</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">Automatically creates folders for each channel. Keeps your library pristine and organized without lifting a finger.</p>
                 </div>
 
-                <div data-aos="fade-up" data-aos-delay="100" class="glass-panel p-8 rounded-2xl hover:border-vortex-accent/30 transition-all group">
-                    <div class="w-12 h-12 rounded-lg bg-vortex-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-ban text-red-400 text-xl"></i>
+                <div data-aos="fade-up" data-aos-delay="150" class="feature-card glass-card p-8 rounded-2xl">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center mb-6 shadow-lg shadow-red-500/30">
+                        <i class="fa-solid fa-ban text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">SponsorBlock</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">Integrated API to skip in-video sponsors, intros, and outros automatically. Save hours of your life.</p>
                 </div>
 
-                <div data-aos="fade-up" data-aos-delay="200" class="glass-panel p-8 rounded-2xl hover:border-vortex-accent/30 transition-all group">
-                    <div class="w-12 h-12 rounded-lg bg-vortex-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-music text-purple-400 text-xl"></i>
+                <div data-aos="fade-up" data-aos-delay="200" class="feature-card glass-card p-8 rounded-2xl">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-6 shadow-lg shadow-purple-500/30">
+                        <i class="fa-solid fa-music text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Audio Extraction</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">Convert videos to crystal clear MP3, FLAC, or WAV. Supports embedding metadata and album art.</p>
                 </div>
 
-                <div data-aos="fade-up" data-aos-delay="300" class="glass-panel p-8 rounded-2xl hover:border-vortex-accent/30 transition-all group">
-                    <div class="w-12 h-12 rounded-lg bg-vortex-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-list-ol text-yellow-400 text-xl"></i>
+                <div data-aos="fade-up" data-aos-delay="250" class="feature-card glass-card p-8 rounded-2xl">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-500 flex items-center justify-center mb-6 shadow-lg shadow-yellow-500/30">
+                        <i class="fa-solid fa-list-ol text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Playlist Control</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">Download full playlists or select specific items (e.g., 1, 5-10). Total control over bulk downloads.</p>
                 </div>
 
-                <div data-aos="fade-up" data-aos-delay="400" class="glass-panel p-8 rounded-2xl hover:border-vortex-accent/30 transition-all group">
-                    <div class="w-12 h-12 rounded-lg bg-vortex-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-scissors text-pink-400 text-xl"></i>
+                <div data-aos="fade-up" data-aos-delay="300" class="feature-card glass-card p-8 rounded-2xl">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center mb-6 shadow-lg shadow-pink-500/30">
+                        <i class="fa-solid fa-scissors text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Time Trimming</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">Don't need the whole video? Cut specific parts by timestamp before downloading.</p>
                 </div>
 
-                <div data-aos="fade-up" data-aos-delay="500" class="glass-panel p-8 rounded-2xl hover:border-vortex-accent/30 transition-all group">
-                    <div class="w-12 h-12 rounded-lg bg-vortex-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-moon text-blue-400 text-xl"></i>
+                <div data-aos="fade-up" data-aos-delay="350" class="feature-card glass-card p-8 rounded-2xl">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
+                        <i class="fa-solid fa-moon text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Modern Dark UI</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">Built with a sleek, eye-friendly dark mode by default. Responsive and beautiful on Windows.</p>
@@ -294,37 +486,69 @@
         </div>
     </section>
 
-    <section id="download" class="py-20 text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-t from-vortex-primary/20 to-transparent"></div>
-        <div class="max-w-3xl mx-auto px-6 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-bold mb-8">Ready to upgrade your workflow?</h2>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <!-- Windows Download -->
-                <a href="https://github.com/ibr3himkhaled/Vortex/releases/download/download_links/Vortex.7z" target="_blank" class="px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-3">
-                    <i class="fa-brands fa-windows text-xl"></i> Download for Windows
+    <!-- Download Section -->
+    <section id="download" class="py-28 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-vortex-primary/5 to-transparent"></div>
+        <div class="glow-orb w-96 h-96 bg-vortex-primary/30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <span data-aos="fade-up" class="inline-block px-4 py-1.5 glass-card rounded-full text-vortex-accent text-sm font-medium mb-6">Download</span>
+            <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl md:text-6xl font-bold mb-8">Ready to get started?</h2>
+            <p data-aos="fade-up" data-aos-delay="200" class="text-xl text-gray-400 mb-12">Download Vortex now and experience the future of media downloading.</p>
+            
+            <div data-aos="zoom-in" data-aos-delay="300" class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
+                <a href="https://github.com/ibr3himkhaled/Vortex/releases/download/Release/Vortex.Setup.exe" target="_blank" class="btn-glow px-10 py-5 bg-gradient-to-r from-vortex-primary to-purple-600 text-white font-bold rounded-2xl hover:shadow-2xl hover:shadow-vortex-primary/50 transition-all flex items-center gap-4 text-lg">
+                    <i class="fa-brands fa-windows text-2xl"></i>
+                    <div class="text-left">
+                        <div class="text-sm font-medium opacity-80">Download for</div>
+                        <div>Windows</div>
+                    </div>
                 </a>
-                <!-- Android Download -->
-                <a href="https://github.com/ibr3himkhaled/Vortex/releases/download/download_links/Vortex.apk" class="px-8 py-4 bg-[#3ddc84] text-black font-bold rounded-lg hover:bg-[#35c676] transition-colors flex items-center justify-center gap-3">
-                    <i class="fa-brands fa-android text-xl"></i> Download for Android
-                </a>
-                <!-- Source Code -->
-                <a href="#" class="px-8 py-4 glass-panel border border-white/10 rounded-lg hover:bg-white/5 transition-colors">
-                    View Source Code
+                <a href="#" class="px-10 py-5 bg-[#3ddc84] text-black font-bold rounded-2xl hover:shadow-lg hover:shadow-green-500/30 transition-all flex items-center gap-4 text-lg">
+                    <i class="fa-brands fa-android text-2xl"></i>
+                    <div class="text-left">
+                        <div class="text-sm font-medium opacity-80">Download for</div>
+                        <div>Android</div>
+                    </div>
                 </a>
             </div>
-            <p class="mt-6 text-sm text-gray-500">Requires Windows 10/11 • 64-bit Architecture</p>
+
+            <div data-aos="fade-up" data-aos-delay="400" class="mt-12 flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle text-vortex-accent"></i>
+                    <span>Free & Open Source</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle text-vortex-accent"></i>
+                    <span>No Ads</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle text-vortex-accent"></i>
+                    <span>Regular Updates</span>
+                </div>
+            </div>
+
+            <p class="mt-8 text-sm text-gray-600">Requires Windows 10/11 • 64-bit Architecture</p>
         </div>
     </section>
 
-    <footer class="border-t border-white/5 bg-[#0a0a0a] py-12">
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-[#09090b] py-12">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2 opacity-50">
-                <i class="fa-solid fa-bolt"></i>
-                <span class="font-mono font-bold">VORTEX</span>
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-vortex-primary to-vortex-accent rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-bolt text-white text-sm"></i>
+                </div>
+                <span class="font-bold text-lg">Vortex</span>
             </div>
             <div class="text-gray-500 text-sm text-center md:text-right">
-                <p>Developed with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by <span class="text-white">Ibrahim Khaled</span></p>
-                <p class="mt-1">&copy; 2025 All rights reserved.</p>
+                <p>Built with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by <span class="text-white">Ibrahim Khaled</span></p>
+                <p class="mt-1">&copy; 2025 Vortex. All rights reserved.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/ibr3himkhaled/Vortex" class="w-10 h-10 glass-card rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all">
+                    <i class="fa-brands fa-github"></i>
+                </a>
             </div>
         </div>
     </footer>
@@ -336,8 +560,18 @@
             duration: 800,
             easing: 'ease-out-quart'
         });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
     </script>
 </body>
 </html>
-
-
