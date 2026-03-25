@@ -5,6 +5,9 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Android-blue?style=for-the-badge)]
 [![Built With](https://img.shields.io/badge/Built%20With-Python%20%7C%20Flet-yellow?style=for-the-badge&logo=python)]
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)]
+<p align="center">
+  <img src="https://img.shields.io/github/downloads/ibr3himkhaled/Vortex/total?style=for-the-badge&color=00ff88" />
+</p>
 
 ---
 
