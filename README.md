@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/ibr3himkhaled/Vortex/main/assets/logo.png" width="160" /><br/>
-  <b style="font-size: 28 px;">Vortex</b>
+  <b style="font-size: 28px;">Vortex</b>
 </p>
 
 > **The Intelligent Cross-Platform Content Engine for Power Users.**  
