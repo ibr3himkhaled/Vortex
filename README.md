@@ -2,6 +2,8 @@
   <img src="https://raw.githubusercontent.com/ibr3himkhaled/Vortex/main/assets/logo.png" width="160" />
 </p>
 
+<h1 align="center">Vortex</h1>
+
 > **The Intelligent Cross-Platform Content Engine for Power Users.**  
 > *Download, Organize, and Manage media like never before — on Windows & Android.*
 
